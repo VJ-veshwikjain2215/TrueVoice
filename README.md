@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/images/logo.jpeg" alt="TrueVoice" width="150">
+  <img src="docs/images/logo.jpg" alt="TrueVoice" width="150">
 </p>
 
 <h1 align="center">TRUEVOICE</h1>
