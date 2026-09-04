@@ -11,6 +11,8 @@
 </p>
 
 <p align="center">
+  <a href="https://true-voice-nine.vercel.app"><img src="https://img.shields.io/badge/deployment-live%20on%20vercel-black?style=flat-square&logo=vercel" alt="Deployed on Vercel"></a>
+  <a href="https://true-voice-nine.vercel.app"><img src="https://img.shields.io/badge/demo-true--voice--nine.vercel.app-00B4D8?style=flat-square&logo=googlechrome&logoColor=white" alt="Live Demo"></a>
   <img src="https://img.shields.io/badge/platform-Web%20%7C%20Android%2010%2B-3DDC84?style=flat-square" alt="Web | Android 10+">
   <img src="https://img.shields.io/badge/engine-16%20kHz%20Float32%20DSP-00B4D8?style=flat-square" alt="16 kHz DSP">
   <img src="https://img.shields.io/badge/inference-ONNX%20WASM%20%2B%20Mobile-orange?style=flat-square" alt="ONNX Runtime">
@@ -24,6 +26,7 @@
 ---
 
 **Author & System Architect** — [Veshwik Jain](https://github.com/VJ-veshwikjain2215) ([LinkedIn](https://www.linkedin.com/in/veshwik-jain/) · [Email](mailto:veshwikjain07@gmail.com))  
+**Live Web Application** — [https://true-voice-nine.vercel.app](https://true-voice-nine.vercel.app)  
 **Repository** — [TrueVoice](https://github.com/VJ-veshwikjain2215/TrueVoice)  
 **Platforms** — **TrueVoice Web Platform** (In-browser 16 kHz DSP & ONNX WASM forensic lab) + **TrueVoice Android** (Real-time in-call interceptor)  
 **Track / Domain** — AI Voice Authenticity, Audio Forensics & Synthetic Impersonation Defence  
@@ -35,18 +38,21 @@ and multi-channel contextual correlation into a unified defence platform against
 Whether running as an **interactive forensic laboratory in the browser** or as an **active interceptor on real
 cellular and VoIP phone calls**, audio is scored locally in real time without ever leaving the user's device.
 
-**Jump to** — [TrueVoice Web Platform](#truevoice-web-platform) · [How TrueVoice Operates](#how-truevoice-operates) ·
-[Screenshots](#screenshots) · [How live capture works](#how-live-capture-works--cellular--webrtc) ·
+**Jump to** — [TrueVoice Web Platform (Live)](#truevoice-web-platform) · [How TrueVoice Operates](#how-truevoice-operates) ·
+[How live capture works](#how-live-capture-works--cellular--webrtc) ·
 [Why AI is essential](#why-ai-is-essential-here) · [Threat model](#threat-model) ·
 [Capability matrix](#capability-matrix) · [Architecture](#architecture) ·
 [Measured, not asserted](#measured-not-asserted) · [Field validation](#field-validation-ikigai-206) ·
 [Modules](#modules) · [Threat coverage](#threat-coverage) · [Technology choices](#technology-choices) ·
-[Running Web Platform](#running-the-web-platform-locally) · [Build Android App](#build-and-run) ·
+[Web Deployment & Setup](#web-platform-deployment--local-development) · [Build Android App](#build-and-run) ·
 [Author & Engineering](#author--engineering) · [License](#license)
 
 ---
 
 ## TrueVoice Web Platform
+
+> 🚀 **Live Production Deployment**:  
+> The TrueVoice Web Platform is deployed and accessible at **[https://true-voice-nine.vercel.app](https://true-voice-nine.vercel.app)** — no installation required.
 
 The repository includes the official **TrueVoice AI Voice Authenticity Detection Platform** web application — a zero-installation, laboratory-grade forensic studio running client-side inside any modern browser:
 
@@ -58,10 +64,9 @@ The repository includes the official **TrueVoice AI Voice Authenticity Detection
 - **Persistent Audit Trail**: Local `localStorage` audit log of analyzed sessions with downloadable JSON forensic reports.
 - **100% Client-Side Privacy**: Audio is normalized to 16 kHz Float32 and processed purely in-browser via WebAssembly SIMD (`ort.min.js`). Audio never leaves the browser.
 
-```powershell
-# Launch the TrueVoice Web Platform locally (port 8080)
-powershell -ExecutionPolicy Bypass -File server.ps1
-# Open http://localhost:8080 or http://127.0.0.1:8080
+```markdown
+Live Demo URL: https://true-voice-nine.vercel.app
+Direct Vercel Deployment: https://true-voice-d0kqfpog3-vj-veshwikjain2215s-projects.vercel.app
 ```
 
 ---
@@ -86,33 +91,6 @@ To prevent momentary acoustic anomalies, transient background noise, or coughs f
 - **Escalation requires 2 consecutive elevated windows** (rapid warning when an attack begins).
 - **De-escalation requires 4 consecutive clean windows** (prevents a scammer's pause from clearing the alarm).
 - States transition through `INDETERMINATE` $\rightarrow$ `SAFE` / `SUSPICIOUS` $\rightarrow$ `CRITICAL`. Missing audio or unmeasured models are never rendered as `SAFE`.
-
----
-
-## Screenshots
-
-<p align="center">
-  <img src="docs/screenshots/onboarding1.jpeg" alt="Onboarding — welcome" width="180">
-  <img src="docs/screenshots/onboarding2.jpeg" alt="Onboarding — threat context" width="180">
-  <img src="docs/screenshots/onboarding3.jpeg" alt="Onboarding — voice defence" width="180">
-</p>
-<p align="center">
-  <img src="docs/screenshots/onboarding4.jpeg" alt="Onboarding — permissions" width="180">
-  <img src="docs/screenshots/onboarding5.jpeg" alt="Onboarding — enrolment" width="180">
-  <img src="docs/screenshots/onboarding6.jpeg" alt="Onboarding — ready" width="180">
-</p>
-<p align="center">
-  <img src="docs/screenshots/homepage.jpeg" alt="Home" width="180">
-  <img src="docs/screenshots/voice_fingerprinting.jpg" alt="Voice fingerprinting" width="180">
-  <img src="docs/screenshots/recent%20calls%20and%20their%20status.jpeg" alt="Recent calls and status" width="180">
-</p>
-
-| Screen | File |
-|---|---|
-| Onboarding (1–6) | [`docs/screenshots/onboarding1.jpeg`](docs/screenshots/onboarding1.jpeg) … [`onboarding6.jpeg`](docs/screenshots/onboarding6.jpeg) |
-| Home | [`docs/screenshots/homepage.jpeg`](docs/screenshots/homepage.jpeg) |
-| Voice fingerprinting | [`docs/screenshots/voice_fingerprinting.jpg`](docs/screenshots/voice_fingerprinting.jpg) |
-| Recent calls and status | [`docs/screenshots/recent calls and their status.jpeg`](docs/screenshots/recent%20calls%20and%20their%20status.jpeg) |
 
 ---
 
@@ -1239,22 +1217,46 @@ TrueVoice/
 
 ---
 
-## Running the Web Platform Locally
+## Web Platform Deployment & Local Development
 
-The TrueVoice Web Platform runs zero-install in any modern browser. To serve it with full WebAssembly SIMD and local model streaming:
+### Live Production Deployment (Vercel)
+
+The TrueVoice Web Platform is deployed and publicly accessible globally via Vercel's Edge Network:
+
+| Attribute | Details |
+|---|---|
+| **Production Domain** | **[https://true-voice-nine.vercel.app](https://true-voice-nine.vercel.app)** |
+| **Deployment URL** | [`https://true-voice-d0kqfpog3-vj-veshwikjain2215s-projects.vercel.app`](https://true-voice-d0kqfpog3-vj-veshwikjain2215s-projects.vercel.app) |
+| **Hosting Platform** | [Vercel](https://vercel.com) Edge Infrastructure |
+| **Source Branch** | `main` (Continuous Deployment enabled) |
+| **Status** | Production Ready / Active |
+| **Client Requirements** | Modern browser supporting Web Audio API & WebAssembly SIMD (Chrome 90+, Edge 90+, Firefox 89+, Safari 15+) |
+| **Zero-Exfiltration Guarantee** | 100% Client-Side Processing. No audio recordings, microphone streams, or biometrics are ever uploaded to any remote server. |
+
+#### Quick Start via Web App
+1. Navigate to **[https://true-voice-nine.vercel.app](https://true-voice-nine.vercel.app)** in any desktop or mobile browser.
+2. Select **Upload Audio File** or click **Benchmark Genuine / Clone** to load instant pre-packaged diagnostic clips.
+3. Or tap **Record Microphone** to capture live speech and watch real-time dual-canvas waveform and FFT spectrogram rendering.
+4. Review diagnostic probability $P(\text{synthetic})$, vocoder phase coherence, and categorical verdicts (`SAFE`, `SUSPICIOUS`, `CRITICAL`).
+
+---
+
+### Local Development Server
+
+If developing offline or modifying the Web Platform frontend locally:
 
 ```powershell
-# Using the bundled PowerShell server (port 8080)
+# Option A: Bundled PowerShell development server (port 8080)
 powershell -ExecutionPolicy Bypass -File server.ps1
 
-# Or with Python 3
+# Option B: Python 3 built-in HTTP server
 python -m http.server 8080
 
-# Or with Node.js
+# Option C: Node.js static server
 npx serve .
 ```
 
-Open `http://localhost:8080` in Chrome, Edge, Firefox, or Safari.
+Once running, access the local laboratory at `http://localhost:8080` (or `http://127.0.0.1:8080`).
 
 ---
 
