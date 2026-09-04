@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TrueVoice — Know What’s Real | AI Voice Authenticity Detection</title>
+  <meta name="description" content="TrueVoice uses AI-powered voice analysis to help identify potentially synthetic or AI-generated speech.">
+  <meta name="keywords" content="voice authenticity, AI voice detection, audio forensics, deepfake voice detection, synthetic speech verification">
+  <meta name="author" content="Veshwik Jain">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="TrueVoice — Know What’s Real">
+  <meta property="og:description" content="TrueVoice uses AI-powered voice analysis to help identify potentially synthetic or AI-generated speech.">
+  <meta property="og:image" content="favicon.svg">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+  <!-- Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- TrueVoice Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ── SITE HEADER ────────────────────────────────────────────────── -->
+  <header class="site-header" role="banner">
+    <div class="container header-inner">
+      <a href="#analyze" class="brand-block" id="navBrandLink">
+        <span class="brand-logo">TRUEVOICE</span>
+        <span class="brand-tag">VOICE AUTHENTICITY</span>
+      </a>
+
+      <nav class="nav-tabs" aria-label="Main Navigation">
+        <button type="button" class="nav-tab-btn active" data-view="analyze">Analyze</button>
+        <button type="button" class="nav-tab-btn" data-view="history">History</button>
+        <button type="button" class="nav-tab-btn" data-view="about">About</button>
+      </nav>
+
+      <div class="header-meta">
+        <span class="badge-lab" title="16 kHz On-Device Signal Analysis Active">16 kHz DSP Active</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── WORKFLOW STEP TRACKER ──────────────────────────────────────── -->
+  <div class="stepper-bar" role="region" aria-label="Analysis Workflow">
+    <div class="container stepper-inner">
+      <div class="stepper-steps">
+        <div class="step-item active" id="stepIndicator1">
+          <span class="step-num">01</span>
+          <span>SELECT AUDIO</span>
+        </div>
+        <span style="color: var(--tv-border-medium);">→</span>
+        <div class="step-item" id="stepIndicator2">
+          <span class="step-num">02</span>
+          <span>ANALYZE</span>
+        </div>
+        <span style="color: var(--tv-border-medium);">→</span>
+        <div class="step-item" id="stepIndicator3">
+          <span class="step-num">03</span>
+          <span>RESULT</span>
+        </div>
+      </div>
+      <div class="pipeline-status-text" id="pipelineStatusText">AASIST + Resemblyzer Engine Ready</div>
+    </div>
+  </div>
+
+  <!-- ── MAIN APPLICATION VIEWS ─────────────────────────────────────── -->
+  <main id="mainContent" role="main">
+
+    <!-- =================================================================
+         VIEW 1: ANALYZE (Primary Laboratory Workflow)
+         ================================================================= -->
+    <section class="view-panel active" id="view-analyze">
+      
+      <!-- Hero Section -->
+      <div class="hero-editorial">
+        <div class="container">
+          <div class="hero-label">VOICE AUTHENTICITY ANALYSIS</div>
+          <h1 class="hero-title">Know what’s real.</h1>
+          <p class="hero-copy">
+            Analyze a voice recording and identify whether the speech is likely human or synthetically generated.
+          </p>
+        </div>
+      </div>
+
+      <!-- Preset Benchmark Strip -->
+      <div class="preset-strip">
+        <div class="container" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem;">
+          <div class="preset-strip-title">Instant Laboratory Benchmarks:</div>
+          <div class="preset-buttons">
+            <button type="button" class="btn-sample" id="btnSampleHuman" title="Analyze genuine human voice sample">
+              <span class="sample-dot sample-dot-safe"></span>
+              <span>Genuine Human Voice</span>
+            </button>
+            <button type="button" class="btn-sample" id="btnSampleClone" title="Analyze synthetic AI clone attack sample">
+              <span class="sample-dot sample-dot-clone"></span>
+              <span>Synthetic AI Clone</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Workspace Area -->
+      <div class="lab-workspace">
+        <div class="container">
+          
+          <!-- Upload & Input Card -->
+          <div class="upload-card">
+            <div class="upload-drop-target" id="dropzone" role="button" tabindex="0" aria-label="Select or drop audio file">
+              <input type="file" id="fileInput" accept="audio/*" style="display: none;" />
+              
+              <svg class="drop-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+                <path d="M12 3v12m0-12L8 7m4-4l4 4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+
+              <div class="drop-heading" id="dropHeading">Upload or drag audio file here</div>
+              <div class="drop-subtext" id="dropSubtext">
+                Select an audio sample from a phone call, voicemail, or speech recording to analyze authenticity.
+              </div>
+
+              <div class="upload-actions">
+                <button type="button" class="btn-lab-primary" id="btnUpload">
+                  <span>Select Audio File</span>
+                </button>
+                <button type="button" class="btn-lab-secondary" id="btnRecord">
+                  <span id="recordText">Record Microphone</span>
+                </button>
+              </div>
+
+              <div class="drop-meta">
+                Supported formats: MP3, WAV, OGG, M4A, FLAC · Audio is decoded locally at 16,000 Hz Mono
+              </div>
+            </div>
+          </div>
+
+          <!-- Processing / Analyzing Progress Card -->
+          <div class="analysis-progress-card" id="scanningOverlay" role="status" aria-live="polite">
+            <div class="analysis-indicator"></div>
+            <div class="analysis-title">Analyzing Voice Authenticity</div>
+            <div class="analysis-stage" id="scanStepText">Decoding audio buffer into 16 kHz Mono Float32...</div>
+            <div class="analysis-progress-line">
+              <div class="analysis-progress-fill" id="scanProgressFill"></div>
+            </div>
+            <div class="analysis-log" id="scanTelemetryLog">[STAGE 01/05] Ingesting audio data...</div>
+          </div>
+
+          <!-- Audio Inspection & Visualizer Panel -->
+          <div class="inspection-panel" id="visualizerCard">
+            <div class="inspection-toolbar">
+              <div class="player-controls">
+                <button type="button" class="btn-play" id="btnPlayPause" aria-label="Play / Pause Audio">
+                  <svg id="playIcon" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                    <polygon points="5 3 19 12 5 21 5 3"/>
+                  </svg>
+                  <svg id="pauseIcon" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
+                    <rect x="6" y="4" width="4" height="16"/>
+                    <rect x="14" y="4" width="4" height="16"/>
+                  </svg>
+                </button>
+                <div class="time-counter">
+                  <span id="timeCurrent">0:00</span> / <span id="timeTotal">0:00</span>
+                </div>
+                <span style="font-family: var(--tv-font-mono); font-size: var(--tv-fs-caption); color: var(--tv-text-muted);" id="inspectFileName">
+                  Sample: genuine.mp3
+                </span>
+              </div>
+
+              <div class="vis-toggle-group">
+                <button type="button" class="btn-vis-tab active" id="btnTabWaveform">Waveform</button>
+                <button type="button" class="btn-vis-tab" id="btnTabSpectrogram">Spectrogram</button>
+              </div>
+            </div>
+
+            <div class="canvas-viewport">
+              <div class="amplitude-ruler">
+                <span>+1.0</span>
+                <span>0.0</span>
+                <span>-1.0</span>
+              </div>
+              <canvas id="waveformCanvas"></canvas>
+              <canvas id="spectrogramCanvas" style="display: none;"></canvas>
+              <div class="scrub-playhead" id="playheadMarker"></div>
+              <div class="time-ruler">
+                <span>0.00s</span>
+                <span>WINDOW: 4.04s (64,600 samples)</span>
+                <span>HOP: 2.02s</span>
+                <span id="inspectDurationTag">Total: 4.80s</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── FORMAL LABORATORY VERIFICATION REPORT (Centerpiece Result) ── -->
+          <div class="report-sheet" id="resultSection" aria-live="polite">
+            
+            <div class="report-header">
+              <div>
+                <div class="report-title-label">TRUEVOICE LABORATORY VERIFICATION REPORT</div>
+                <div style="font-size: 1.15rem; font-weight: 700; color: var(--tv-text-primary); margin-top: 0.2rem;" id="reportSampleTitle">
+                  Sample: Audio Recording
+                </div>
+              </div>
+              <div class="report-serial" id="reportSerialId">REPORT ID: TV-2026-8812</div>
+            </div>
+
+            <!-- Verdict Certificate -->
+            <div class="verdict-certificate safe" id="verdictBanner">
+              <div>
+                <div class="verdict-cert-title" id="verdictClassification">Likely Human Voice</div>
+                <div class="verdict-cert-reason" id="verdictReason">VERDICT: MATCH_AUTHENTIC · NATURAL GLOTTAL RESONANCE</div>
+              </div>
+              <div class="verdict-cert-score-group">
+                <div class="cert-score-label">Synthetic Probability</div>
+                <div class="cert-score-value" id="verdictConfidenceValue">14.2%</div>
+              </div>
+            </div>
+
+            <!-- Technical Telemetry Grid -->
+            <div class="telemetry-row">
+              <div class="telemetry-cell">
+                <div class="cell-label">SYNTHETIC SCORE P(SYNTH)</div>
+                <div class="cell-value" id="syntheticScoreVal">0.1420</div>
+                <div class="cell-sub">Safety Threshold: 0.50 (Elevated: 0.30)</div>
+              </div>
+              <div class="telemetry-cell" id="confidenceCell">
+                <div class="cell-label">AUTHENTICITY CONFIDENCE</div>
+                <div class="cell-value" id="authenticityConfidenceVal">85.8%</div>
+                <div class="cell-sub">Organic Vocal Formants Verified</div>
+              </div>
+              <div class="telemetry-cell">
+                <div class="cell-label">AUDIO DURATION & ENERGY</div>
+                <div class="cell-value" id="durationEnergyVal">4.80s · RMS 0.0842</div>
+                <div class="cell-sub">Silence Gate: 0.005 RMS Threshold</div>
+              </div>
+              <div class="telemetry-cell">
+                <div class="cell-label">WINDOW AUDIT SUMMARY</div>
+                <div class="cell-value" id="windowCountVal">3 Windows (3 Active)</div>
+                <div class="cell-sub">Median-of-5 Session Stabilized</div>
+              </div>
+            </div>
+
+            <!-- Forensic Evidence Diagnosis -->
+            <div class="forensic-diagnosis-box">
+              <div class="diagnosis-label">ACOUSTIC FORENSIC DIAGNOSIS & EVIDENCE</div>
+              <p class="diagnosis-text" id="evidenceNarrative">
+                The audio sample exhibits natural acoustic characteristics consistent with genuine human speech (P(synthetic) = 14.2%, well below the 50% threshold). Spectral tilt and vocal tract phase resonance are authentic.
+              </p>
+            </div>
+
+            <!-- Window-by-Window Audit Table -->
+            <div>
+              <div style="font-family: var(--tv-font-mono); font-size: var(--tv-fs-label); color: var(--tv-text-muted); text-transform: uppercase; margin-bottom: 0.5rem;">
+                WINDOW-BY-WINDOW AUDIT LOG (64,600 SAMPLES PER WINDOW · 32,300 HOP)
+              </div>
+              <div class="audit-table-wrap">
+                <table class="audit-table">
+                  <thead>
+                    <tr>
+                      <th>Segment</th>
+                      <th>Time Interval</th>
+                      <th>RMS Energy</th>
+                      <th>P(Synthetic)</th>
+                      <th>Acoustic Band</th>
+                      <th>Authenticity</th>
+                      <th>Diagnostic Reason</th>
+                    </tr>
+                  </thead>
+                  <tbody id="windowTableBody">
+                    <!-- Populated dynamically -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Report Actions -->
+            <div class="report-actions-row">
+              <button type="button" class="btn-lab-secondary" id="btnExportReport">
+                <span>Download Report (JSON)</span>
+              </button>
+              <button type="button" class="btn-lab-primary" id="btnAnalyzeAnother">
+                <span>Analyze Another Clip</span>
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+
+    <!-- =================================================================
+         VIEW 2: HISTORY (Persistent Laboratory Audit Log)
+         ================================================================= -->
+    <section class="view-panel" id="view-history">
+      <div class="container">
+        <div class="history-section-header">
+          <div>
+            <h2 class="hero-title" style="font-size: 1.8rem; margin-bottom: 0.25rem;">Analysis History</h2>
+            <p class="hero-copy" style="font-size: 0.9rem;">
+              Persistent laboratory audit trail of analyzed voice recordings.
+            </p>
+          </div>
+          <div style="display: flex; align-items: center; gap: 1rem;">
+            <span style="font-family: var(--tv-font-mono); font-size: var(--tv-fs-caption); color: var(--tv-text-muted);" id="historyCount">0 Records</span>
+            <button type="button" class="btn-sample" id="btnClearHistory" style="color: var(--tv-ai-text);">Clear History</button>
+          </div>
+        </div>
+
+        <div class="history-card" id="historyTableCard">
+          <div class="audit-table-wrap">
+            <table class="audit-table">
+              <thead>
+                <tr>
+                  <th>Recording</th>
+                  <th>Timestamp</th>
+                  <th>Duration</th>
+                  <th>Classification</th>
+                  <th>P(Synthetic)</th>
+                  <th>Authenticity</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="historyTableBody">
+                <!-- Populated dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="empty-history-card" id="emptyHistoryBox" style="display: none;">
+          <div style="font-family: var(--tv-font-mono); font-size: 0.85rem; color: var(--tv-text-muted); margin-bottom: 0.75rem;">
+            No analysis records stored in this browser session.
+          </div>
+          <button type="button" class="btn-lab-primary" id="btnHistoryGoAnalyze">
+            Analyze Audio Sample
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         VIEW 3: ABOUT & METHODOLOGY
+         ================================================================= -->
+    <section class="view-panel" id="view-about">
+      <div class="container">
+        <div class="about-section-header">
+          <div class="hero-label">TECHNICAL METHODOLOGY & SYSTEM BACKGROUND</div>
+          <h2 class="hero-title" style="font-size: 1.8rem;">How TrueVoice Operates</h2>
+          <p class="hero-copy">
+            TrueVoice was engineered to address generative audio impersonation. Neural voice generation can clone a human voice in seconds, but leaves distinct acoustic anomalies in the frequency, vocoder phase, and pitch stability domains.
+          </p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.25rem; margin-top: 1.75rem;">
+          <div style="background: var(--tv-bg-surface); border: 1px solid var(--tv-border-subtle); padding: 1.5rem; border-radius: var(--tv-radius-xs);">
+            <div style="font-family: var(--tv-font-mono); font-size: var(--tv-fs-label); color: var(--tv-text-muted); text-transform: uppercase; margin-bottom: 0.4rem;">01 / NEURAL VOCODER ANALYSIS</div>
+            <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--tv-text-primary); margin-bottom: 0.5rem;">Phase Incoherence in High Frequencies</h3>
+            <p style="font-size: var(--tv-fs-small); color: var(--tv-text-secondary); line-height: 1.5;">
+              Neural vocoders (HiFi-GAN, MelGAN) invert mel-spectrograms to generate speech waveforms. Because phase data is estimated, micro-phase discontinuities appear in the 4 kHz - 8 kHz bands that do not exist in organic vocal cords.
+            </p>
+          </div>
+
+          <div style="background: var(--tv-bg-surface); border: 1px solid var(--tv-border-subtle); padding: 1.5rem; border-radius: var(--tv-radius-xs);">
+            <div style="font-family: var(--tv-font-mono); font-size: var(--tv-fs-label); color: var(--tv-text-muted); text-transform: uppercase; margin-bottom: 0.4rem;">02 / SPEAKER VERIFICATION</div>
+            <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--tv-text-primary); margin-bottom: 0.5rem;">Biometric Voiceprint Matching</h3>
+            <p style="font-size: var(--tv-fs-small); color: var(--tv-text-secondary); line-height: 1.5;">
+              TrueVoice computes high-dimensional acoustic embeddings (Resemblyzer GE2E architecture) to evaluate cosine similarity against an enrolled speaker. A voice must match the contact identity (&ge; 0.75) and pass anti-spoofing to be declared authentic.
+            </p>
+          </div>
+
+          <div style="background: var(--tv-bg-surface); border: 1px solid var(--tv-border-subtle); padding: 1.5rem; border-radius: var(--tv-radius-xs);">
+            <div style="font-family: var(--tv-font-mono); font-size: var(--tv-fs-label); color: var(--tv-text-muted); text-transform: uppercase; margin-bottom: 0.4rem;">03 / TEMPORAL STABILIZATION</div>
+            <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--tv-text-primary); margin-bottom: 0.5rem;">Median-of-Five Session Filtering</h3>
+            <p style="font-size: var(--tv-fs-small); color: var(--tv-text-secondary); line-height: 1.5;">
+              To prevent momentary acoustic anomalies or background coughs from triggering false alerts, TrueVoice enforces a 5-window sliding buffer that requires 2 consecutive elevated windows to escalate and 4 to de-escalate.
+            </p>
+          </div>
+        </div>
+
+        <!-- Author Card -->
+        <div class="author-profile-card">
+          <div class="author-title-group">
+            <div class="author-name">Veshwik Jain</div>
+            <div class="author-role">Engineer & System Architect</div>
+          </div>
+          <p class="author-bio">
+            Developed the TrueVoice audio authenticity platform, integrating on-device neural spoofing detection, biometric speaker verification, and signal forensic pipelines to protect against AI voice cloning attacks.
+          </p>
+          <div class="author-links-row">
+            <a href="https://github.com/VJ-veshwikjain2215" target="_blank" rel="noopener noreferrer" class="btn-lab-primary">
+              <span>GitHub Profile</span>
+            </a>
+            <a href="https://www.linkedin.com/in/veshwik-jain/" target="_blank" rel="noopener noreferrer" class="btn-lab-secondary">
+              <span>LinkedIn</span>
+            </a>
+            <a href="mailto:veshwikjain07@gmail.com" class="btn-lab-secondary">
+              <span>Contact via Email</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ── SITE FOOTER ────────────────────────────────────────────────── -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-main">
+        
+        <div class="footer-brand-col">
+          <div class="footer-logo">TRUEVOICE</div>
+          <div class="footer-tagline">Know what’s real.</div>
+          <p class="footer-desc">
+            AI-powered voice authenticity detection.
+          </p>
+        </div>
+
+        <div class="footer-links-col">
+          <div>
+            <div class="footer-col-title">Navigation</div>
+            <ul class="footer-links-list">
+              <li><a href="#analyze" onclick="window.trueVoiceApp.switchView('analyze')">Analyze</a></li>
+              <li><a href="#history" onclick="window.trueVoiceApp.switchView('history')">History</a></li>
+              <li><a href="#about" onclick="window.trueVoiceApp.switchView('about')">About</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <div class="footer-col-title">Engineer</div>
+            <ul class="footer-links-list">
+              <li><a href="https://github.com/VJ-veshwikjain2215" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+              <li><a href="https://www.linkedin.com/in/veshwik-jain/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+              <li><a href="mailto:veshwikjain07@gmail.com">Contact</a></li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom-bar">
+        <div>&copy; 2026 TrueVoice · All rights reserved.</div>
+        <div>
+          Veshwik Jain &nbsp;·&nbsp;
+          <a href="https://github.com/VJ-veshwikjain2215" target="_blank" rel="noopener noreferrer">GitHub</a>
+          &nbsp;·&nbsp;
+          <a href="https://www.linkedin.com/in/veshwik-jain/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          &nbsp;·&nbsp;
+          <a href="mailto:veshwikjain07@gmail.com">Contact</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ONNX Runtime Web -->
+  <script src="js/ort.min.js"></script>
+  <!-- TrueVoice App Modules (v2.6) -->
+  <script type="module" src="js/app.js?v=2.6"></script>
+</body>
+</html>

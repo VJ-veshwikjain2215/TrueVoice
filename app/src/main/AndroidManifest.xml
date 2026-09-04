@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.READ_CALL_LOG" />
+    <uses-permission android:name="android.permission.WRITE_CALL_LOG" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ANSWER_PHONE_CALLS" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <!-- ── Voice Clone Defence Module permissions ──────────────────────── -->
+    <!-- Microphone: voice enrollment records ~60 s of speech for embedding -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <!-- Internet + network: WebRTC signaling and peer discovery -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <!-- Full-screen intent: lets incoming-call notification wake the screen.
+         On API 34+ this became a special permission requiring user approval in Settings. -->
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission
+        android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE"
+        android:minSdkVersion="34" />
+    <!-- Availability service: keeps the device reachable for calls in the background. Not a
+         microphone or media use, so it declares the special-use FGS type on Android 14+. -->
+    <uses-permission
+        android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE"
+        android:minSdkVersion="34" />
+
+    <uses-feature
+        android:name="android.hardware.microphone"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="false" />
+
+    <application
+        android:name=".TriNetraApplication"
+        android:allowBackup="true"
+        android:icon="@drawable/app_logo"
+        android:label="TriNetra"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Trinetra">
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:showWhenLocked="true"
+            android:turnScreenOn="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".ui.screens.alert.EmergencyAlertActivity"
+            android:exported="false"
+            android:showWhenLocked="true"
+            android:turnScreenOn="true"
+            android:launchMode="singleInstance"
+            android:theme="@style/Theme.Trinetra" />
+
+        <activity
+            android:name=".ui.screens.digitalarrest.DigitalArrestActivity"
+            android:exported="false"
+            android:showWhenLocked="true"
+            android:turnScreenOn="true"
+            android:launchMode="singleInstance"
+            android:theme="@style/Theme.Trinetra" />
+        
+        <service
+            android:name=".sensors.call.TrustMeshCallScreeningService"
+            android:permission="android.permission.BIND_SCREENING_SERVICE"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.telecom.CallScreeningService" />
+            </intent-filter>
+        </service>
+
+        <receiver
+            android:name=".sensors.call.OutgoingCallReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.NEW_OUTGOING_CALL" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name=".sensors.call.TrustMeshPhoneStateReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.PHONE_STATE" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name=".sensors.notification.TrustMeshNotificationListenerService"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService" />
+            </intent-filter>
+        </service>
+
+        <receiver
+            android:name=".sensors.sms.TrustMeshSmsReceiver"
+            android:exported="true"
+            android:permission="android.permission.BROADCAST_SMS">
+            <intent-filter android:priority="999">
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name=".sensors.notification.PackageEventReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
+
+        <!-- ── Voice Clone Defence Module services ──────────────────────── -->
+        <!--
+          LiveVerificationService: holds the microphone while doing on-device
+          speaker-identity and clone-detection inference during a live call.
+          Declared as microphone foreground service (not phoneCall) because this
+          module does not integrate with the telephony stack by design.
+        -->
+        <service
+            android:name=".vcd.service.LiveVerificationService"
+            android:exported="false"
+            android:foregroundServiceType="microphone" />
+
+        <!--
+          VoipCallService: owns the WebRTC peer connection for the entire duration
+          of a voice call. Also declared as microphone foreground service for the
+          same reason — no telephony integration, full WebRTC stack.
+        -->
+        <service
+            android:name=".vcd.service.VoipCallService"
+            android:exported="false"
+            android:foregroundServiceType="microphone" />
+
+        <!--
+          AvailabilityService: keeps the signalling socket and mDNS advertisement alive so the
+          device stays reachable for calls while the app is backgrounded, the way a phone is always
+          reachable. specialUse rather than a media type because it holds no microphone.
+        -->
+        <service
+            android:name=".vcd.service.AvailabilityService"
+            android:exported="false"
+            android:foregroundServiceType="specialUse">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="Keeps this device reachable to receive incoming TRINETRA calls over the local network." />
+        </service>
+
+    </application>
+
+</manifest>

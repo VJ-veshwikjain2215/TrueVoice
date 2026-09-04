@@ -1,0 +1,85 @@
+/* ==========================================================================
+   TRUEVOICE — EDITORIAL AUDIO FORENSICS DESIGN SYSTEM
+   Palette: Warm Paper, Deep Charcoal Ink, Precision Neutral Grays
+   Zero Blue Gradients · Zero Neon · Research-Grade Laboratory Style
+   ========================================================================== */
+
+:root {
+  /* ── Background & Surfaces (Warm Paper & Laboratory Linens) ── */
+  --tv-bg-body: #FBFBFA;
+  --tv-bg-surface: #FFFFFF;
+  --tv-bg-subtle: #F5F5F0;
+  --tv-bg-elevated: #ECECE6;
+  --tv-bg-active: #E4E4DC;
+  --tv-bg-contrast: #141413;
+
+  /* ── Typography & Ink ── */
+  --tv-text-primary: #141413;
+  --tv-text-secondary: #575752;
+  --tv-text-muted: #7C7C75;
+  --tv-text-faint: #A8A8A0;
+  --tv-text-inverse: #FBFBFA;
+
+  /* ── Neutral Hairline Borders ── */
+  --tv-border-hairline: #ECECE6;
+  --tv-border-subtle: #E2E2DA;
+  --tv-border-medium: #D0D0C6;
+  --tv-border-strong: #9E9E94;
+  --tv-border-dark: #141413;
+
+  /* ── Authentic Human Verified State (Deep Forest Green) ── */
+  --tv-verified-bg: #F0FDF4;
+  --tv-verified-border: #BBF7D0;
+  --tv-verified-text: #166534;
+  --tv-verified-badge: #15803D;
+
+  /* ── AI / Synthetic Alert State (Deep Oxide Crimson) ── */
+  --tv-ai-bg: #FEF2F2;
+  --tv-ai-border: #FECACA;
+  --tv-ai-text: #991B1B;
+  --tv-ai-badge: #B91C1C;
+
+  /* ── Warning / Elevated Caution State (Deep Ochre Amber) ── */
+  --tv-warning-bg: #FFFBEB;
+  --tv-warning-border: #FDE68A;
+  --tv-warning-text: #92400E;
+  --tv-warning-badge: #B45309;
+
+  /* ── Indeterminate State (Neutral Slate) ── */
+  --tv-neutral-bg: #F5F5F0;
+  --tv-neutral-border: #E2E2DA;
+  --tv-neutral-text: #575752;
+  --tv-neutral-badge: #7C7C75;
+
+  /* ── Fonts ── */
+  --tv-font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --tv-font-mono: 'JetBrains Mono', 'SF Mono', Consolas, "Courier New", monospace;
+
+  /* ── Typography Scales ── */
+  --tv-fs-display: clamp(2rem, 3.8vw, 2.75rem);
+  --tv-fs-h1: clamp(1.6rem, 2.8vw, 2.1rem);
+  --tv-fs-h2: 1.35rem;
+  --tv-fs-h3: 1.1rem;
+  --tv-fs-body: 0.9375rem;
+  --tv-fs-small: 0.84rem;
+  --tv-fs-caption: 0.75rem;
+  --tv-fs-label: 0.6875rem;
+
+  --tv-lh-tight: 1.2;
+  --tv-lh-snug: 1.4;
+  --tv-lh-normal: 1.6;
+
+  /* ── Geometry & Radii (Crisp, Restrained, Non-Bubbly) ── */
+  --tv-radius-xs: 2px;
+  --tv-radius-sm: 4px;
+  --tv-radius-md: 6px;
+  --tv-radius-lg: 8px;
+
+  /* ── Shadows (Soft Diffused Architectural Depth) ── */
+  --tv-shadow-subtle: 0 1px 2px rgba(20, 20, 19, 0.04);
+  --tv-shadow-card: 0 1px 3px rgba(20, 20, 19, 0.05), 0 6px 16px rgba(20, 20, 19, 0.02);
+  --tv-shadow-floating: 0 4px 12px rgba(20, 20, 19, 0.08), 0 16px 32px rgba(20, 20, 19, 0.04);
+
+  /* ── Transitions ── */
+  --tv-transition: 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+}
