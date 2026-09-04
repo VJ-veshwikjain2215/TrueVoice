@@ -1,46 +1,91 @@
 <p align="center">
-  <img src="docs/images/logo.jpeg" alt="TriNetra" width="150">
+  <img src="docs/images/logo.jpeg" alt="TrueVoice" width="150">
 </p>
 
 <h1 align="center">TRUEVOICE</h1>
 
 <p align="center">
-  <b>Know what's real.</b><br>
-  AI-powered voice authenticity detection platform.<br>
-  Real-time audio forensics and synthetic voice defence — multi-model on-device inference fused into explained authenticity verdicts.
+  <b>Know what’s real.</b><br>
+  AI-powered voice authenticity detection platform and synthetic voice defence stack.<br>
+  Dual-surface forensic intelligence: in-browser neural laboratory & on-device Android call interception.
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/platform-Android%2010%2B-3DDC84?style=flat-square" alt="Android 10+">
+  <img src="https://img.shields.io/badge/platform-Web%20%7C%20Android%2010%2B-3DDC84?style=flat-square" alt="Web | Android 10+">
+  <img src="https://img.shields.io/badge/engine-16%20kHz%20Float32%20DSP-00B4D8?style=flat-square" alt="16 kHz DSP">
+  <img src="https://img.shields.io/badge/inference-ONNX%20WASM%20%2B%20Mobile-orange?style=flat-square" alt="ONNX Runtime">
   <img src="https://img.shields.io/badge/Kotlin-2.0-7F52FF?style=flat-square" alt="Kotlin 2.0">
-  <img src="https://img.shields.io/badge/UI-Jetpack%20Compose-4285F4?style=flat-square" alt="Compose">
+  <img src="https://img.shields.io/badge/UI-Compose%20%2B%20Web-4285F4?style=flat-square" alt="Compose + Web">
   <img src="https://img.shields.io/badge/tests-84%20passing-brightgreen?style=flat-square" alt="84 tests">
-  <img src="https://img.shields.io/badge/inference-on--device%20ONNX-orange?style=flat-square" alt="ONNX">
-  <img src="https://img.shields.io/badge/call%20audio-never%20leaves%20the%20phone-blue?style=flat-square" alt="Private">
+  <img src="https://img.shields.io/badge/privacy-audio%20never%20leaves%20device-blue?style=flat-square" alt="Privacy First">
   <img src="https://img.shields.io/badge/license-MIT-yellow?style=flat-square" alt="MIT">
 </p>
 
 ---
 
-**Hackathon** — IKIGAI 206 · **built in 36 hours**
-**Team** — Mythos
-**Track** — GenAI
-**Problem statement** — Real-time scam and impersonation defence
-**License** — [MIT](LICENSE)
+**Author & System Architect** — [Veshwik Jain](https://github.com/VJ-veshwikjain2215) ([LinkedIn](https://www.linkedin.com/in/veshwik-jain/) · [Email](mailto:veshwikjain07@gmail.com))  
+**Repository** — [TrueVoice](https://github.com/VJ-veshwikjain2215/TrueVoice)  
+**Platforms** — **TrueVoice Web Platform** (In-browser 16 kHz DSP & ONNX WASM forensic lab) + **TrueVoice Android** (Real-time in-call interceptor)  
+**Track / Domain** — AI Voice Authenticity, Audio Forensics & Synthetic Impersonation Defence  
+**Hackathon Origins** — Prototype engineered in 36 hours at IKIGAI 206 (Team Mythos)  
+**License** — [MIT](LICENSE)  
 
-A production-shaped defence stack — on-device voice identity + anti-spoofing, cellular call screening,
-WebRTC VoIP dialler, SMS/notification correlation, overlays, Digital Arrest workflow — **designed,
-wired and demoed on real phones inside a single 36-hour hackathon**. That pace is the point: the
-architecture is intentional enough to ship under extreme time pressure without collapsing into a
-slide-deck mock.
+TrueVoice combines deep audio forensics, neural vocoder phase analysis, biometric voiceprint matching,
+and multi-channel contextual correlation into a unified defence platform against generative AI voice cloning.
+Whether running as an **interactive forensic laboratory in the browser** or as an **active interceptor on real
+cellular and VoIP phone calls**, audio is scored locally in real time without ever leaving the user's device.
 
-**Jump to** — [Screenshots](#screenshots) · [How live capture works](#how-live-capture-works--cellular--webrtc) ·
-[Why AI is essential](#why-ai-is-essential-here) ·
-[Threat model](#threat-model) · [Capability matrix](#capability-matrix) ·
-[Evaluate in 5 minutes](#evaluate-this-in-five-minutes) · [Architecture](#architecture) ·
+**Jump to** — [TrueVoice Web Platform](#truevoice-web-platform) · [How TrueVoice Operates](#how-truevoice-operates) ·
+[Screenshots](#screenshots) · [How live capture works](#how-live-capture-works--cellular--webrtc) ·
+[Why AI is essential](#why-ai-is-essential-here) · [Threat model](#threat-model) ·
+[Capability matrix](#capability-matrix) · [Architecture](#architecture) ·
 [Measured, not asserted](#measured-not-asserted) · [Field validation](#field-validation-ikigai-206) ·
 [Modules](#modules) · [Threat coverage](#threat-coverage) · [Technology choices](#technology-choices) ·
-[Build and run](#build-and-run) · [License](#license)
+[Running Web Platform](#running-the-web-platform-locally) · [Build Android App](#build-and-run) ·
+[Author & Engineering](#author--engineering) · [License](#license)
+
+---
+
+## TrueVoice Web Platform
+
+The repository includes the official **TrueVoice AI Voice Authenticity Detection Platform** web application — a zero-installation, laboratory-grade forensic studio running client-side inside any modern browser:
+
+- **Interactive Audio Analyzer**: Upload audio files (`.wav`, `.mp3`, `.ogg`, `.m4a`), drag-and-drop clips, or capture live speech via microphone.
+- **Dual-Canvas Forensic Visualizers**: High-resolution time-domain waveform rendering paired with a real-time 2048-point FFT spectrogram visualizer.
+- **Instant Laboratory Benchmarks**: Pre-packaged reference audio (`audio/sample-genuine-human.mp3`, `audio/sample-ai-clone.mp3`) for immediate one-click diagnostic evaluation.
+- **Biometric Enrolled Comparison**: Test incoming audio against enrolled reference voiceprints (`audio/sample-reference-speaker.ogg`) via on-device embedding cosine matching.
+- **Forensic Diagnosis Metrics**: Outputs synthetic probability $P(\text{synthetic})$, vocoder phase coherence, frequency resonance stability, and categorical verdicts (`SAFE`, `SUSPICIOUS`, `CRITICAL`).
+- **Persistent Audit Trail**: Local `localStorage` audit log of analyzed sessions with downloadable JSON forensic reports.
+- **100% Client-Side Privacy**: Audio is normalized to 16 kHz Float32 and processed purely in-browser via WebAssembly SIMD (`ort.min.js`). Audio never leaves the browser.
+
+```powershell
+# Launch the TrueVoice Web Platform locally (port 8080)
+powershell -ExecutionPolicy Bypass -File server.ps1
+# Open http://localhost:8080 or http://127.0.0.1:8080
+```
+
+---
+
+## How TrueVoice Operates
+
+TrueVoice was engineered to address generative audio impersonation. Neural voice generation can clone a human voice in seconds, but leaves distinct acoustic anomalies in the frequency, vocoder phase, and pitch stability domains. TrueVoice attacks these anomalies across three complementary layers:
+
+### 1 · Phase Incoherence in High Frequencies
+Neural vocoders (HiFi-GAN, MelGAN, BigVGAN) invert mel-spectrograms into continuous time-domain speech waveforms. Because phase spectra are reconstructed algorithmically rather than produced through physical acoustic resonance, **micro-phase discontinuities appear in the 4 kHz – 8 kHz bands** that do not exist in organic human vocal tracts. TrueVoice’s spectral decomposition and AASIST spoof detector identify these synthetic phase artifacts even when pitch and timbre sound indistinguishable to the human ear.
+
+### 2 · Biometric Voiceprint Matching
+TrueVoice computes high-dimensional acoustic embeddings (**Resemblyzer GE2E architecture**, 256-dimensional $L_2$-normalized vector) to evaluate cosine similarity against an enrolled speaker. A voice must match the contact identity ($\ge 0.75$) **and** pass anti-spoofing to be declared authentic. A high similarity score with an elevated synthetic score triggers `Reason.CLONE_SIGNATURE` — identifying that someone is using an AI clone of a trusted person.
+
+### 3 · Per-Contact Anti-Spoofing Calibration
+Raw anti-spoofing models exhibit domain shift on mobile microphones and telephone codecs. Rather than using an brittle global threshold, TrueVoice calibrates against the contact's own enrolled audio:
+$$\text{Threshold} = \max(0.50, \text{baselineSynthetic} + 0.15)$$
+Every live score is evaluated relative to that speaker's measured acoustic floor, yielding **zero false CRITICAL windows on genuine human audio**.
+
+### 4 · Median-of-Five Session Filtering
+To prevent momentary acoustic anomalies, transient background noise, or coughs from triggering false alerts, TrueVoice enforces a 5-window sliding buffer:
+- **Escalation requires 2 consecutive elevated windows** (rapid warning when an attack begins).
+- **De-escalation requires 4 consecutive clean windows** (prevents a scammer's pause from clearing the alarm).
+- States transition through `INDETERMINATE` $\rightarrow$ `SAFE` / `SUSPICIOUS` $\rightarrow$ `CRITICAL`. Missing audio or unmeasured models are never rendered as `SAFE`.
 
 ---
 
@@ -73,12 +118,12 @@ slide-deck mock.
 
 ## How live capture works — cellular + WebRTC
 
-TriNetra defends **both** the calls people already make and TriNetra-to-TriNetra VoIP.
+TrueVoice defends **both** the calls people already make and TrueVoice-to-TrueVoice VoIP.
 
 | Path | How audio reaches the pipeline | What you do |
 |---|---|---|
-| **Normal carrier / ISP cellular call** (any phone → Android) | Put the call on **speakerphone**. The far party's voice is in the room; TriNetra scores it through the ordinary microphone — no privileged `VOICE_CALL` APIs. | Speaker on → Live Verification / overlay scoring |
-| **WebRTC VoIP dialler** (TriNetra ↔ TriNetra) | Remote audio arrives as a **decoded in-process WebRTC track** (`RemoteAudioAdapter`) — clean signal, no room-mic dependency. | Same Wi‑Fi / LAN (mDNS peer discovery) |
+| **Normal carrier / ISP cellular call** (any phone → Android) | Put the call on **speakerphone**. The far party's voice is in the room; TrueVoice scores it through the ordinary microphone — no privileged `VOICE_CALL` APIs. | Speaker on → Live Verification / overlay scoring |
+| **WebRTC VoIP dialler** (TrueVoice ↔ TrueVoice) | Remote audio arrives as a **decoded in-process WebRTC track** (`RemoteAudioAdapter`) — clean signal, no room-mic dependency. | Same Wi‑Fi / LAN (mDNS peer discovery) |
 
 **Same pipeline either way.** Both paths normalise to 16 kHz mono float and run the same
 `VerificationPipeline.analyze()` — speaker fingerprint + calibrated anti-spoofing + session
@@ -114,7 +159,7 @@ sequenceDiagram
     autonumber
     participant A as Attacker
     participant P as Phone
-    participant T as TriNetra
+    participant T as TrueVoice
     A->>P: SMS - "KYC expired, SIM blocks in 2h, call 98xxxxxx"
     P->>T: SMS_RECEIVED
     T->>T: L1 signals - KYC_EXPIRY 15, SIM_BLOCK 20, CALLBACK_NUMBER
@@ -138,15 +183,16 @@ performs.
 
 ## What we built
 
-TriNetra correlates **calls, SMS and notifications on-device** into a single risk score with its
+TrueVoice correlates **calls, SMS and notifications on-device** into a single risk score with its
 reasoning attached — and adds the check nothing else on the phone performs: **verifying a speaker's
 voice against an enrolled voiceprint using two neural models running locally.**
 
 It runs on **real cellular calls** — the far party's voice is scored from room audio while the call is
-on speakerphone, using only the ordinary microphone — and on TriNetra's own **WebRTC dialler**, where
-the remote track arrives clean inside the app's own process.
+on speakerphone, using only the ordinary microphone — and on TrueVoice's own **WebRTC dialler**, where
+the remote track arrives clean inside the app's own process. Together with the **TrueVoice Web Platform**
+for in-browser audio forensics and benchmark analysis, it offers an end-to-end multi-platform defense.
 
-27,800 lines of Kotlin. 179 source files. 140 MB of bundled models. 84 passing tests. No server.
+27,800 lines of Kotlin. 179 source files. 140 MB of bundled models. 84 passing tests. No server required.
 
 ---
 
@@ -241,12 +287,12 @@ them outright — *"not as a fallback and not behind a flag"*. Two legitimate pa
 are built and demoed**:
 
 *On a normal cellular / ISP call* — put the phone on **speakerphone**. The far party's voice is
-physically in the room; TriNetra scores it through the ordinary microphone — the same audio a person
+physically in the room; TrueVoice scores it through the ordinary microphone — the same audio a person
 standing nearby would hear. That is how live clone defence ran on Redmi and S24 at IKIGAI 206,
 including calls originating from an iPhone. `CaptureSpikeScreen` measures OEM mic behaviour on the
 actual handset so the product stays honest about routing instead of guessing.
 
-*On a TriNetra-to-TriNetra call* — a **WebRTC VoIP dialler** with mDNS peer discovery puts the remote
+*On a TrueVoice-to-TrueVoice call* — a **WebRTC VoIP dialler** with mDNS peer discovery puts the remote
 party's audio inside our own process as a decoded track. No platform call-audio policy in the way —
 a clean signal path that complements the cellular speakerphone route. One pipeline, two capture
 surfaces.
@@ -254,7 +300,7 @@ surfaces.
 **2 · Anti-spoofing made reliable by calibration — and validated live at IKIGAI 206.**
 Off-the-shelf anti-spoofing models are trained on clean studio audio against 2019-era TTS, so on phone
 recordings their **absolute** score is meaningless without calibration — a fixed threshold can flag real
-people as clones. TriNetra makes the signal work by discarding the absolute number and using a
+people as clones. TrueVoice makes the signal work by discarding the absolute number and using a
 **relative** one.
 
 Enrolment scores the detector against the one recording whose provenance is not in doubt: the audio
@@ -322,10 +368,10 @@ they know the victim's number and often their name, and they can synthesise a fa
 few seconds of public audio. They are working to a script and to a clock.
 
 **What we assume they cannot do.** Compromise the handset, gain root, install a malicious app the user
-does not consent to, or break TLS. TriNetra defends the *conversation*, not the device — a rooted
+does not consent to, or break TLS. TrueVoice defends the *conversation*, not the device — a rooted
 phone is outside its model, and it says so rather than pretending otherwise.
 
-| Attacker capability | Assumed | How TriNetra answers it |
+| Attacker capability | Assumed | How TrueVoice answers it |
 |---|---|---|
 | Spoof caller ID and sender name | Yes | Identity is never the whole verdict; behaviour and content are scored independently |
 | Impersonate a bank, TRAI, DoT or police | Yes | 60+ typed signals plus semantic classification; authority claims raise risk rather than lower it |
@@ -484,7 +530,7 @@ engineering discipline, not a toy threshold tuned to one file.
 | **Authenticity (synthetic / AI-generated probability)** | Baseline-calibrated; genuine audio not flagged as an attack | **76–84% likely synthetic (AI-generated)** on scored windows — positive clone signal in a live hackathon environment |
 | **Fused verdict** | SAFE after stabilisation | Elevated — identity mismatch and/or synthesis evidence; protection surfaces fire on real calls |
 
-TriNetra checks **both who is speaking and whether the waveform is synthetic** — and that combination
+TrueVoice checks **both who is speaking and whether the waveform is synthetic** — and that combination
 is the point. A clone that sounds like someone you trust is *more* dangerous than a wrong number; the
 pipeline is built to catch **sound-alike + AI-generated**, not just “wrong person”. Voiceprints are
 **learned embeddings stored encrypted at enrolment** — they cannot be copied out of a MinMax model and
@@ -553,7 +599,7 @@ On-device regression for the bundled aditya clip pair: `./gradlew :app:connected
 
 ### Field validation (IKIGAI 206)
 
-TriNetra is **Android-only**, but real scams are not. During the hackathon the full pipeline was
+While TrueVoice provides a universal **in-browser Web Forensic Lab** for zero-install file and microphone analysis on any computer or phone, its real-time call screening interceptor targets **Android** (the primary handset ecosystem for telephony scam attacks). During the hackathon the full mobile pipeline was
 **validated and tested on three physical handsets**, including a **cellular call from an iPhone** into
 the defended Android device — the common cross-platform attack shape (caller on any phone, victim on
 Android).
@@ -575,7 +621,7 @@ and how the dual capture paths behave.
 **MicCapture, speakerphone, and Capture Spike — how live cellular audio is scored**  
 `MicCapture` uses `MediaRecorder.AudioSource.MIC` only — no privileged `VOICE_CALL` / `VOICE_UPLINK`
 APIs. On a **normal carrier call**, put the phone on **speakerphone**: the far party is in the room,
-and TriNetra scores that room audio through the ordinary mic.
+and TrueVoice scores that room audio through the ordinary mic.
 
 `CaptureSpikeScreen` measures what the handset actually delivers during a call:
 
@@ -712,7 +758,7 @@ without a warning because screening timed out. Auto-block at the dialer layer on
 returns `BLOCK_CALL` in time with auto-block enabled.
 
 **Cellular + WebRTC — both paths are first-class**  
-The **WebRTC dialler** is TriNetra ↔ TriNetra VoIP on the same LAN (mDNS) — remote audio is an
+The **WebRTC dialler** is TrueVoice ↔ TrueVoice VoIP on the same LAN (mDNS) — remote audio is an
 in-process decoded track. **Cellular / ISP defence** uses speakerphone room audio via `MicCapture`.
 Both feed the same fusion pipeline. On Redmi (primary demo), Capture Spike confirmed in-call capture
 and live cellular scoring ran including **iPhone → Android** calls; S24 carried the WebRTC path in
@@ -876,7 +922,7 @@ advance, revealed on tap so a shoulder-surfer or a screen recording does not cap
 reliable signal in the module, and the only one that depends on no model at all.
 
 **Two capture paths, one pipeline.** `LiveVerificationService` scores a **normal cellular / ISP call**
-from room audio on **speakerphone**; `WebRtcIntelligenceCoordinator` scores a **TriNetra WebRTC call**
+from room audio on **speakerphone**; `WebRtcIntelligenceCoordinator` scores a **TrueVoice WebRTC call**
 from the decoded remote track. Both normalise to the same 16 kHz mono float and run the same
 `analyze()`. `MicCapture` uses `MediaRecorder.AudioSource.MIC` and nothing else — the privileged
 `VOICE_*` sources are refused outright, not attempted as a fallback.
@@ -919,7 +965,7 @@ gateway, and a full-screen alert wakes the device over the lock screen.
 The problem statement names impersonation. An attacker impersonates on three axes, and each gets a
 distinct defence rather than one score doing duty for all of them.
 
-| Axis | What the attacker fakes | TriNetra's answer |
+| Axis | What the attacker fakes | TrueVoice's answer |
 |---|---|---|
 | **Person** | A familiar voice, cloned by a generative model | Speaker embedding matched against an enrolled voiceprint, a synthesis detector calibrated to that speaker, and a codeword no model can know |
 | **Identity** | Caller ID, sender name, a plausible short-code | Composite identity resolution; identity never carries the verdict alone, so a spoof buys nothing |
@@ -944,7 +990,7 @@ panic. Signals: `SIM_BLOCK` (20), `KYC_EXPIRY` (15), `TRAI_IMPERSONATION` (15), 
 `MOBILE_DISCONNECTION`, `NUMBER_SUSPENSION`. These pair with urgency signals and a callback number in
 the body; a callback number that does not match the sender is its own risk factor.
 
-*Scope:* TriNetra detects the social engineering that sets up a swap. Detecting a completed swap needs
+*Scope:* TrueVoice detects the social engineering that sets up a swap. Detecting a completed swap needs
 carrier-side signals this build does not read.
 
 ### Digital arrest
@@ -955,9 +1001,9 @@ the full workflow.
 
 ### Voice cloning
 
-Thirty seconds of audio is enough to clone a voice convincingly. TriNetra enrols a voiceprint from
+Thirty seconds of audio is enough to clone a voice convincingly. TrueVoice enrols a voiceprint from
 consented audio and verifies calls against it on both paths — a real cellular call on speakerphone,
-scored from room audio through the ordinary microphone, and a TriNetra-to-TriNetra call, scored from
+scored from room audio through the ordinary microphone, and a TrueVoice-to-TrueVoice call, scored from
 the decoded WebRTC track. Both run the same pipeline. Backed by the codeword challenge, which no model
 can be wrong about, and by identity, signal classification and correlation underneath.
 
@@ -1002,17 +1048,17 @@ rejected for a measurable reason.
 ## Evaluate this in five minutes
 
 The whole system can be demonstrated on **one handset** for cellular speakerphone defence. No lab
-setup required for the parts that matter; WebRTC adds a second TriNetra handset on the same Wi‑Fi.
+setup required for the parts that matter; WebRTC adds a second TrueVoice handset on the same Wi‑Fi.
 
 | # | Step | What you should see |
 |---|---|---|
 | 1 | Install, grant permissions, allow **Display over other apps** | Onboarding completes; overlay permission is the only easy one to miss |
 | 2 | Voice tab → enrol a contact, ~60 s of speech, set a codeword | Enrolment measures that speaker's `baselineSynthetic` and stores channel variants |
 | 3 | Have that contact call you (cellular). **Put it on speakerphone** | Overlay appears at ring; voice scoring begins within seconds and updates every 3 s |
-| 4 | Or place a **WebRTC** call between two TriNetra installs on the same Wi‑Fi | Same pipeline — remote track scored without room-mic routing |
+| 4 | Or place a **WebRTC** call between two TrueVoice installs on the same Wi‑Fi | Same pipeline — remote track scored without room-mic routing |
 | 5 | Play a cloned clip of the same speaker down the line instead | Identity separation drives the verdict away from a match; the reason is named on screen |
 | 6 | Tools → Digital Arrest → **Simulate trigger** | Guided Digital Arrest workflow: overlay, evidence capture with SHA-256, PDF report, trusted-contact alert |
-| 7 | Send any SMS containing `TriNetra` | Emergency alarm, vibration, full-screen alert over the lock screen |
+| 7 | Send any SMS containing `TrueVoice` (or `TriNetra`) | Emergency alarm, vibration, full-screen alert over the lock screen |
 
 Offline the whole way except the optional outbound family-alert SMS and the semantic layer — pull the
 network and voice verification, transcription, correlation and scoring all keep working.
@@ -1028,7 +1074,7 @@ defence is single-device.
 emulator will not do — this is telephony, microphone and overlay permissions end to end.
 
 ```bash
-git clone <repo> && cd Mythos_TriNetra
+git clone https://github.com/VJ-veshwikjain2215/TrueVoice.git && cd TrueVoice
 ./gradlew :app:assembleDebug
 ./gradlew :app:installDebug
 ```
@@ -1054,7 +1100,7 @@ All values also read from the environment (`GROQ_API_KEY`, `TEXTBEE_API_KEY`, `T
 1. Grant runtime permissions — contacts, phone, SMS, microphone, notifications.
 2. Grant **Display over other apps**; without it the overlay silently never appears.
 3. Grant **Notification access** in Settings.
-4. Optionally set TriNetra as the call-screening app.
+4. Optionally set TrueVoice as the call-screening app.
 5. For voice defence: open the Voice tab, enrol a contact (~60 s of consented speech), set a codeword.
 6. VoIP calls need both devices on the same local network — discovery is mDNS.
 
@@ -1081,7 +1127,7 @@ All values also read from the environment (`GROQ_API_KEY`, `TEXTBEE_API_KEY`, `T
 
 | SMS body | Effect |
 |---|---|
-| contains `TriNetra` | Emergency alarm, vibration, full-screen alert over the lock screen |
+| contains `TrueVoice` or `TriNetra` | Emergency alarm, vibration, full-screen alert over the lock screen |
 
 SMS bodies **`2000`**, **`6000`**, and **`7000`** do **not** trigger risk elevation or clone flags —
 those former demo control codes were removed so scoring comes only from on-device voice analysis and
@@ -1177,35 +1223,47 @@ app/src/main/java/com/trustmesh/app/
 └── ui/                Compose screens · overlay · theme
 ```
 
----
-
----
-
-## TrueVoice Web Platform
-
-The repository includes the official **TrueVoice AI Voice Authenticity Detection Platform** web application:
-- **Interactive Audio Analyzer**: Upload, drag-and-drop, or record audio for instant on-device forensic analysis.
-- **Waveform & FFT Spectrogram**: High-resolution time-domain and frequency-domain visualizers.
-- **Preset Benchmarks**: Instantly evaluate with genuine human voice and synthetic AI clone samples (`audio/sample-genuine-human.mp3`, `audio/sample-ai-clone.mp3`).
-- **Forensic History**: Persistent local audit trail of analysis sessions with downloadable JSON diagnosis reports.
-- **Privacy First**: Audio is processed locally via 16 kHz Float32 DSP — audio never leaves the browser.
-
-### Running the Web Platform Locally
-
-To launch the TrueVoice web application on Windows:
-```powershell
-powershell -ExecutionPolicy Bypass -File server.ps1
+Web Platform (Root Directory):
 ```
-Or open [`index.html`](index.html) directly in any modern browser (Chrome, Edge, Firefox, Safari).
+TrueVoice/
+├── index.html         TrueVoice Forensic Studio UI
+├── css/style.css      Responsive dark-mode forensic styling
+├── js/
+│   ├── app.js         UI bindings, recorder, audio graph & report exports
+│   ├── analyzer.js    16 kHz Float32 DSP, FFT & ONNX WASM pipeline
+│   └── visualizer.js  Waveform & frequency spectrogram canvas renderers
+├── audio/             Laboratory reference benchmarks & enrolled voiceprints
+├── models/            ONNX models & manifest.json
+└── server.ps1         Local development HTTP server
+```
+
+---
+
+## Running the Web Platform Locally
+
+The TrueVoice Web Platform runs zero-install in any modern browser. To serve it with full WebAssembly SIMD and local model streaming:
+
+```powershell
+# Using the bundled PowerShell server (port 8080)
+powershell -ExecutionPolicy Bypass -File server.ps1
+
+# Or with Python 3
+python -m http.server 8080
+
+# Or with Node.js
+npx serve .
+```
+
+Open `http://localhost:8080` in Chrome, Edge, Firefox, or Safari.
 
 ---
 
 ## Author & Engineering
 
-- **Name**: Veshwik Jain
+- **Author & System Architect**: [Veshwik Jain](https://github.com/VJ-veshwikjain2215)
 - **GitHub**: [https://github.com/VJ-veshwikjain2215](https://github.com/VJ-veshwikjain2215)
 - **LinkedIn**: [https://www.linkedin.com/in/veshwik-jain/](https://www.linkedin.com/in/veshwik-jain/)
-- **Email**: `veshwikjain07@gmail.com`
+- **Email**: [veshwikjain07@gmail.com](mailto:veshwikjain07@gmail.com)
 
 ---
 
