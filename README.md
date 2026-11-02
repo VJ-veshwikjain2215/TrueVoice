@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/images/logo.jpg" alt="TrueVoice" width="150">
+  <img src="documents/images/logo.jpg" alt="TrueVoice" width="150">
 </p>
 
 <h1 align="center">TRUEVOICE</h1>
@@ -22,6 +22,14 @@
   <img src="https://img.shields.io/badge/privacy-audio%20never%20leaves%20device-blue?style=flat-square" alt="Privacy First">
   <img src="https://img.shields.io/badge/license-MIT-yellow?style=flat-square" alt="MIT">
 </p>
+
+## Repository layout
+
+- [code/](code/README.md): application source, runtime assets, tests and build/deployment files.
+- [documents/](documents/README.md): project documentation, history and [planning](documents/project-plan/README.md).
+- Root: project overview, GitHub configuration and repository-wide policies.
+
+See the [structure guide](documents/repository-structure.md) for changed paths and verification scope. Service and developer commands below run from code/ unless shown otherwise.
 
 ---
 
@@ -558,14 +566,14 @@ stabilisation). They can be reproduced from the repo:
 
 | Artifact | Path |
 |---|---|
-| Labelled manifest | [`eval/manifest.csv`](eval/manifest.csv) |
-| Benchmark script | [`eval/benchmark.py`](eval/benchmark.py) |
-| Session stabiliser (Python port of `SessionScores.kt`) | [`eval/session_scores.py`](eval/session_scores.py) |
+| Labelled manifest | [`eval/manifest.csv`](code/eval/manifest.csv) |
+| Benchmark script | [`eval/benchmark.py`](code/eval/benchmark.py) |
+| Session stabiliser (Python port of `SessionScores.kt`) | [`eval/session_scores.py`](code/eval/session_scores.py) |
 | Per-run outputs | `eval/output/sessions.csv`, `eval/output/metrics.json` |
 
 ```bash
 # After fetching model checkpoints (see eval/README.md)
-python eval/benchmark.py
+python code/eval/benchmark.py
 ```
 
 The manifest lists **19 labelled sessions** from IKIGAI 206 field validation (three handsets, mic and
@@ -713,7 +721,7 @@ headroom — which is why enrolment and Capture Spike are part of the product fl
 **Where do 76–85% / ~90% precision / 690 ms come from?**  
 **690 ms** — measured on LAVA (published above). **76–85% accuracy / ~90% precision / ~83% recall** —
 labelled hackathon sessions on the three handsets above, session-level after median-of-five
-stabilisation. Reproducible harness: [`eval/benchmark.py`](eval/benchmark.py) + [`eval/manifest.csv`](eval/manifest.csv)
+stabilisation. Reproducible harness: [`eval/benchmark.py`](code/eval/benchmark.py) + [`eval/manifest.csv`](code/eval/manifest.csv)
 (19 labelled sessions). **76–84% likely synthetic** on MinMax Speech 2.8 Premium clone windows is a
 separate **authenticity** reading on live calls — not the same number as session-level accuracy.
 
@@ -1052,14 +1060,14 @@ defence is single-device.
 emulator will not do — this is telephony, microphone and overlay permissions end to end.
 
 ```bash
-git clone https://github.com/VJ-veshwikjain2215/TrueVoice.git && cd TrueVoice
+git clone https://github.com/VJ-veshwikjain2215/TrueVoice.git && cd TrueVoice/code
 ./gradlew :app:assembleDebug
 ./gradlew :app:installDebug
 ```
 
 ### Configuration
 
-Create `local.properties` (gitignored):
+Create `code/local.properties` (gitignored):
 
 ```properties
 sdk.dir=/path/to/Android/sdk
@@ -1184,7 +1192,7 @@ altogether.
 ## Project layout
 
 ```
-app/src/main/java/com/trustmesh/app/
+code/app/src/main/java/com/trustmesh/app/
 ├── sensors/           call · sms · notification
 ├── interaction/       InteractionManager · Interaction
 ├── core/
@@ -1201,9 +1209,9 @@ app/src/main/java/com/trustmesh/app/
 └── ui/                Compose screens · overlay · theme
 ```
 
-Web Platform (Root Directory):
+Web Platform (inside code/):
 ```
-TrueVoice/
+TrueVoice/code/
 ├── index.html         TrueVoice Forensic Studio UI
 ├── css/style.css      Responsive dark-mode forensic styling
 ├── js/
@@ -1246,6 +1254,7 @@ The TrueVoice Web Platform is deployed and publicly accessible globally via Verc
 If developing offline or modifying the Web Platform frontend locally:
 
 ```powershell
+# Run from code/.
 # Option A: Bundled PowerShell development server (port 8080)
 powershell -ExecutionPolicy Bypass -File server.ps1
 

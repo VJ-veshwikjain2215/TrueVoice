@@ -8,23 +8,23 @@ window geometry, fusion rules, and session stabilisation as the Android app.
 1. **Python 3.10+** with dependencies from the VCD tools tree:
 
 ```bash
-cd modules/voice-clone-defence/tools
+cd code/modules/voice-clone-defence/VoiceCloneDefense/tools
 python -m venv .venv
 .venv/Scripts/pip install -r requirements.txt   # Windows
 # source .venv/bin/activate && pip install -r requirements.txt   # Linux/macOS
 bash fetch_checkpoints.sh                       # downloads Resemblyzer + AASIST weights
 ```
 
-Or install eval-only deps at repo root: `pip install -r eval/requirements.txt` (models still live under `tools/_work/`).
+Or install eval-only deps in code/: `pip install -r eval/requirements.txt` (models still live under `tools/_work/`).
 
 2. **Labelled manifest** — `eval/manifest.csv` lists **19 IKIGAI 206 sessions** across three handsets
    (LAVA, Redmi Note 12 Pro 5G, Samsung S24): genuine calls, AI clones, channel variants
    (`probe_channel`: `mic`, `voip-wb`, `voip-nb`), and a cross-speaker benign check. Paths are
-   relative to the repo root.
+   relative to code/.
 
 ## Run
 
-From the repo root:
+From code/:
 
 ```bash
 python eval/benchmark.py
@@ -68,7 +68,7 @@ Audio lives under `app/src/androidTest/assets/` (aditya pair) and `eval/datasets
 
 For Capture Spike measurements, `UNRELIABLE` path frequency, Groq wire protocol, 5-minute correlation
 window, and generalisation limits, see **Technical FAQ** under
-[Field validation (IKIGAI 206)](../README.md#field-validation-ikigai-206) in the root README.
+[Field validation (IKIGAI 206)](../../README.md#field-validation-ikigai-206) in the root README.
 
 ## Relationship to the app
 

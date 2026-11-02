@@ -1,0 +1,24 @@
+name: Source and static web checks
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check web JavaScript
+        run: |
+          node --check code/js/app.js
+          node --check code/js/analyzer.js
+          node --check code/js/history.js
+      - name: Build static web bundle
+        run: node code/ops/build-web.mjs
+      - name: Check Python source syntax
+        run: python3 -m compileall -q code/eval code/modules/voice-clone-defence/VoiceCloneDefense/tools
