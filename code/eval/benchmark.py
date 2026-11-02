@@ -5,7 +5,7 @@ Reads eval/manifest.csv, runs each labelled session through the same pipeline ge
 Android app (PyTorch reference models matching shipped ONNX), and reports precision / recall /
 accuracy at session level using median-of-five stabilisation (SessionScores).
 
-Usage (from repo root, after model checkpoints are fetched — see eval/README.md):
+Usage (from code/, after model checkpoints are fetched — see eval/README.md):
 
     python eval/benchmark.py
     python eval/benchmark.py --manifest eval/manifest.csv --out eval/output
@@ -27,7 +27,7 @@ from pathlib import Path
 import numpy as np
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-TOOLS_DIR = REPO_ROOT / "modules" / "voice-clone-defence" / "tools"
+TOOLS_DIR = REPO_ROOT / "modules" / "voice-clone-defence" / "VoiceCloneDefense" / "tools"
 sys.path.insert(0, str(TOOLS_DIR))
 
 import analyze_clips as ac  # noqa: E402

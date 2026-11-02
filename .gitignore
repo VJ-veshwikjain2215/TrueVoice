@@ -30,3 +30,11 @@ gradle-8.7/
 _vosk_dl/
 *.apk
 
+
+# Local state at every application depth
+**/__pycache__/
+*.py[cod]
+**/.venv/
+.env.*
+!**/.env.example
+code/.web-dist/
